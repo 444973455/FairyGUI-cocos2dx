@@ -337,7 +337,6 @@ void GComboBox::setup_afterAdd(ByteBuffer* buffer, int beginPos)
         return;
 
     const std::string* str;
-    bool hasIcon = false;
     int itemCount = buffer->readShort();
     for (int i = 0; i < itemCount; i++)
     {
@@ -348,12 +347,11 @@ void GComboBox::setup_afterAdd(ByteBuffer* buffer, int beginPos)
         _values.push_back(buffer->readS());
         if ((str = buffer->readSP()))
         {
-            if (!hasIcon)
-            {
-                for (int j = 0; j < (int)_items.size() - 1; j++)
-                    _icons.push_back(STD_STRING_EMPTY);
-            }
             _icons.push_back(*str);
+        }
+        else
+        {
+            _icons.push_back(STD_STRING_EMPTY);
         }
 
         buffer->setPos(nextPos);
